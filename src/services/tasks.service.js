@@ -1,3 +1,5 @@
+const boom = require("@hapi/boom");
+
 class TasksService {
 	constructor() {
 		this.tasks = [];
@@ -9,7 +11,11 @@ class TasksService {
 
 	async findOne(id) {
 		// const name = this.ge	tTotal();
-		return id;
+		const task = this.tasks[id];
+		if (!task) {
+			throw boom.notFound("Task not found");
+		}
+		return task;
 	}
 
 	async create(data) {
