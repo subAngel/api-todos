@@ -19,8 +19,8 @@ class UsersService {
 		return id;
 	}
 
-	update(id) {
-		return id;
+	update(id, body) {
+		return id, body;
 	}
 }
 
