@@ -1,29 +1,35 @@
 const Joi = require("joi");
 
 const id = Joi.number();
-const name = Joi.string().alphanum().min(3).max(255);
-const email = Joi.string().email();
-const password = Joi.string().min(6);
+const user_id = Joi.number();
+const title = Joi.string().min(3);
+const description = Joi.string();
+const status = Joi.string().valid("Completed", "Pending");
+const due_date = Joi.date();
 
-const createUserSchema = Joi.object({
-	name: name.required(),
-	email: email.required(),
-	password: password.required(),
+const createTaskSchema = Joi.object({
+	id,
+	user_id: user_id.required(),
+	title: title.required(),
+	description: description,
+	status: status.required(),
+	due_date: due_date.required(),
 });
 
-const updateUserSchema = Joi.object({
+const updateTaskScheme = Joi.object({
 	id: id.required(),
-	name,
-	email,
-	password,
+	user_id,
+	title,
+	description,
+	status,
+	due_date,
 });
 
-const getUserSchema = Joi.object({
+const deleteTaskScheme = Joi.object({
 	id: id.required(),
 });
 
 module.exports = {
-	createUserSchema,
-	updateUserSchema,
-	getUserSchema,
+	createTaskSchema,
+	updateTaskScheme,
 };
