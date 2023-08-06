@@ -4,26 +4,26 @@ const TasksService = require("../services/tasks.service");
 const routesTasks = Router();
 const service = new TasksService();
 
-routesTasks.get("/", async (req, res) => {
+routesTasks.get("/", async (req, res, next) => {
 	try {
 		const tasks = await service.findAll();
 		return res.json(tasks);
 	} catch (error) {
-		return res.status(500).json({ message: error.message });
+		next(error);
 	}
 });
 
-routesTasks.get("/:id", async (req, res) => {
+routesTasks.get("/:id", async (req, res, next) => {
 	try {
 		const { id } = req.params;
-		const task = service.findOne(id);
+		const task = await service.findOne(id);
 		res.json(task);
 	} catch (error) {
-		res.status(404).json({ message: error.message });
+		next(error);
 	}
 });
 
-routesTasks.post("/", async (req, res) => {
+routesTasks.post("/", async (req, res, next) => {
 	try {
 		const body = req.body;
 		const newTask = await service.create(body);
@@ -32,11 +32,11 @@ routesTasks.post("/", async (req, res) => {
 			newTask,
 		});
 	} catch (error) {
-		res.status(500).json({ message: error.message });
+		next(error);
 	}
 });
 
-routesTasks.patch("/:id", async (req, res) => {
+routesTasks.patch("/:id", async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		const body = req.body;
@@ -46,11 +46,11 @@ routesTasks.patch("/:id", async (req, res) => {
 			task,
 		});
 	} catch (error) {
-		res.status(404).json({ message: error.message });
+		next(error);
 	}
 });
 
-routesTasks.delete("/:id", async (req, res) => {
+routesTasks.delete("/:id", async (req, res, next) => {
 	try {
 		const { id } = req.params;
 		const response = await service.delete(id);
@@ -59,7 +59,7 @@ routesTasks.delete("/:id", async (req, res) => {
 			response,
 		});
 	} catch (error) {
-		res.status(404).json({ message: error.message });
+		next(error);
 	}
 });
 

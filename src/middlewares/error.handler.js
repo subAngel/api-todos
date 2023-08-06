@@ -1,7 +1,7 @@
 const debug = require("debug")("error-handler");
 
 function logErrors(err, req, res, next) {
-	debug(err);
+	debug(err.message);
 	next(err);
 }
 

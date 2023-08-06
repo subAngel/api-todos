@@ -2,6 +2,7 @@ var debug = require("debug")("api");
 const morgan = require("morgan");
 const express = require("express");
 const routerApi = require("./routes");
+const { errorHandler, logErrors } = require("./middlewares/error.handler");
 
 const app = express();
 
@@ -16,8 +17,10 @@ app.get("/", (req, res) => {
 });
 
 routerApi(app);
-
 // * Manejadores de errores
+// * middlewares de tipo error se definen antes del routing
+app.use(logErrors);
+app.use(errorHandler);
 
 // * Iniciar el servidor
 app.listen(3000, () => {
