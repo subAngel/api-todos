@@ -23,11 +23,13 @@ class TasksService {
 	}
 
 	async delete(id) {
-		return id;
+		const task = await this.findOne(id);
+		return task;
 	}
 
 	async update(id, body) {
-		return id, body;
+		const task = await this.findOne(id);
+		return task;
 	}
 }
 

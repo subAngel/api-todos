@@ -1,3 +1,5 @@
+const boom = require("@hapi/boom");
+
 class UsersService {
 	constructor() {
 		this.users = [];
@@ -8,7 +10,11 @@ class UsersService {
 	}
 
 	async findOne(id) {
-		return id;
+		const user = this.users[id];
+		if (!user) {
+			throw boom.notFound("User not found");
+		}
+		return user;
 	}
 
 	async create(data) {
@@ -16,11 +22,14 @@ class UsersService {
 	}
 
 	async delete(id) {
-		return id;
+		const userdeleted = await this.findOne(id);
+		return userdeleted;
 	}
 
 	async update(id, body) {
-		return id, body;
+		const user = await this.findOne(id);
+		// TODO actualizar usuarios
+		return user;
 	}
 }
 
