@@ -4,33 +4,33 @@ const TasksService = require("../services/tasks.service");
 const routesTasks = Router();
 const service = new TasksService();
 
-routesTasks.get("/", (req, res) => {
-	const tasks = service.findAll();
+routesTasks.get("/", async (req, res) => {
+	const tasks = await service.findAll();
 	return res.json(tasks);
 });
 
-routesTasks.post("/", (req, res) => {
+routesTasks.post("/", async (req, res) => {
 	const body = req.body;
-	const newTask = service.create(body);
+	const newTask = await service.create(body);
 	res.json({
 		message: "created user",
 		newTask,
 	});
 });
 
-routesTasks.patch("/:id", (req, res) => {
+routesTasks.patch("/:id", async (req, res) => {
 	const { id } = req.params;
 	const body = req.body;
-	const task = service.update(id, body);
+	const task = await service.update(id, body);
 	res.json({
 		message: "updated",
 		task,
 	});
 });
 
-routesTasks.delete("/:id", (req, res) => {
+routesTasks.delete("/:id", async (req, res) => {
 	const { id } = req.params;
-	const response = service.delete(id);
+	const response = await service.delete(id);
 	res.json({
 		message: "deleted",
 		response,
