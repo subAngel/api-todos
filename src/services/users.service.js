@@ -3,23 +3,23 @@ class UsersService {
 		this.users = [];
 	}
 
-	findAll() {
+	async findAll() {
 		return this.users;
 	}
 
-	findOne(id) {
+	async findOne(id) {
 		return id;
 	}
 
-	create(data) {
+	async create(data) {
 		return data;
 	}
 
-	delete(id) {
+	async delete(id) {
 		return id;
 	}
 
-	update(id, body) {
+	async update(id, body) {
 		return id, body;
 	}
 }
