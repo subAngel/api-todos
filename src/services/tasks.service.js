@@ -8,7 +8,7 @@ class TasksService {
 	}
 
 	async findOne(id) {
-		// const name = this.getTotal();
+		// const name = this.ge	tTotal();
 		return id;
 	}
 
