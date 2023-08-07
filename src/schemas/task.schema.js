@@ -25,11 +25,12 @@ const updateTaskScheme = Joi.object({
 	due_date,
 });
 
-const deleteTaskScheme = Joi.object({
+const getTaskSchema = Joi.object({
 	id: id.required(),
 });
 
 module.exports = {
 	createTaskSchema,
 	updateTaskScheme,
+	getTaskSchema,
 };
