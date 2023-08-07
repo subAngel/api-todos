@@ -4,7 +4,7 @@ const id = Joi.number();
 const user_id = Joi.number();
 const title = Joi.string().min(3);
 const description = Joi.string();
-const status = Joi.string().valid("Completed", "Pending");
+const status = Joi.string().valid("COMPLETED", "PENDING");
 const due_date = Joi.date();
 
 const createTaskSchema = Joi.object({
