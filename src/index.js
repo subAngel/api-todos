@@ -1,3 +1,4 @@
+require("dotenv").config();
 var debug = require("debug")("api");
 const morgan = require("morgan");
 const express = require("express");
@@ -35,6 +36,6 @@ app.use(boomErrorHandler);
 app.use(errorHandler);
 
 // * Iniciar el servidor
-app.listen(3000, () => {
-	debug("api is running on https://localhost:3000/");
+app.listen(process.env.PORT, () => {
+	debug(`api is running on https://localhost:${process.env.PORT}/`);
 });

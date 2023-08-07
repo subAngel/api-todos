@@ -1,3 +1,4 @@
+require("dotenv").config();
 const config = {
 	env: process.env.NODE_ENV || "dev",
 	port: process.env.PORT || 3080,
@@ -8,4 +9,4 @@ const config = {
 	dbPort: process.env.DB_PORT,
 };
 
-module.exports = config;
+module.exports = { config };
