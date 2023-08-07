@@ -33,44 +33,56 @@ routesTasks.get(
 	}
 );
 
-routesTasks.post("/", async (req, res, next) => {
-	try {
-		const body = req.body;
-		const newTask = await service.create(body);
-		res.json({
-			message: "created user",
-			newTask,
-		});
-	} catch (error) {
-		next(error);
+routesTasks.post(
+	"/",
+	validatorHandler(createTaskSchema, "body"),
+	async (req, res, next) => {
+		try {
+			const body = req.body;
+			const newTask = await service.create(body);
+			res.json({
+				message: "Task created successfully",
+				newTask,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
-});
+);
 
-routesTasks.patch("/:id", async (req, res, next) => {
-	try {
-		const { id } = req.params;
-		const body = req.body;
-		const task = await service.update(id, body);
-		res.json({
-			message: "updated",
-			task,
-		});
-	} catch (error) {
-		next(error);
+routesTasks.patch(
+	"/:id",
+	validatorHandler(getTaskSchema, "params"),
+	async (req, res, next) => {
+		try {
+			const { id } = req.params;
+			const body = req.body;
+			const task = await service.update(id, body);
+			res.json({
+				message: "updated",
+				task,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
-});
+);
 
-routesTasks.delete("/:id", async (req, res, next) => {
-	try {
-		const { id } = req.params;
-		const response = await service.delete(id);
-		res.json({
-			message: "deleted",
-			response,
-		});
-	} catch (error) {
-		next(error);
+routesTasks.delete(
+	"/:id",
+	validatorHandler(getTaskSchema, "params"),
+	async (req, res, next) => {
+		try {
+			const { id } = req.params;
+			const response = await service.delete(id);
+			res.json({
+				message: "deleted",
+				response,
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
-});
+);
 
 module.exports = routesTasks;
