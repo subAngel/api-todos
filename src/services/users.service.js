@@ -1,9 +1,13 @@
 const boom = require("@hapi/boom");
-const getConnection = require("../libs/postgres");
+const debug = require("debug")("user-service");
+// const getConnection = require("../libs/postgres");
+const pool = require("../libs/postgres.pool");
 
 class UsersService {
 	constructor() {
-		this.users = [];
+		this.pool = pool;
+
+		this.pool.on("error", (err) => debug(err));
 	}
 
 	async findAll() {
