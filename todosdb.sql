@@ -25,3 +25,14 @@ CREATE TABLE tasks(
     on delete CASCADE
 
 );
+
+INSERT INTO users (fullname, name, email, image)
+VALUES
+    ('Juan Pérez', 'juanperez', 'juanperez@example.com', 'imagen1.jpg'),
+    ('María López', 'marialopez', 'marialopez@example.com', 'imagen2.jpg'),
+    ('Pedro Gómez', 'pedrogomez', 'pedrogomez@example.com', 'imagen3.jpg');
+INSERT INTO tasks (user_id, title, description, completed, due_date)
+VALUES
+    (1, 'Terminar informe', 'Redactar y revisar informe mensual', false, '2023-08-10 12:00:00'),
+    (2, 'Comprar víveres', 'Hacer la lista de compras y visitar el supermercado', false, '2023-08-15 15:30:00'),
+    (3, 'Preparar presentación', 'Preparar diapositivas para reunión de ventas', true, '2023-08-20 09:00:00');
