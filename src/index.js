@@ -1,6 +1,9 @@
 var debug = require("debug")("api");
 const morgan = require("morgan");
 const express = require("express");
+const cors = require("cors");
+const slash = require("express-slash");
+const helmet = require("helmet");
 const routerApi = require("./routes");
 const {
 	errorHandler,
@@ -11,7 +14,10 @@ const {
 const app = express();
 
 // * configuracion y middlewares
+app.enable("scrict routing");
 app.use(morgan("dev"));
+app.use(cors());
+app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -21,6 +27,7 @@ app.get("/", (req, res) => {
 });
 
 routerApi(app);
+app.use(slash());
 // * Manejadores de errores
 // * middlewares de tipo error se definen antes del routing
 app.use(logErrors);
