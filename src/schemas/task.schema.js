@@ -8,7 +8,7 @@ const status = Joi.string().valid("Completed", "Pending");
 const due_date = Joi.date();
 
 const createTaskSchema = Joi.object({
-	id,
+	id: id.required(),
 	user_id: user_id.required(),
 	title: title.required(),
 	description: description,
@@ -17,8 +17,6 @@ const createTaskSchema = Joi.object({
 });
 
 const updateTaskScheme = Joi.object({
-	id: id.required(),
-	user_id,
 	title,
 	description,
 	status,
