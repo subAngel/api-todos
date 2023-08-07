@@ -7,7 +7,10 @@ function validatorHandler(schema, property) {
 	/// Middleware dinamico que retorna un handler validator
 	return (req, res, next) => {
 		const data = req[property];
-		const { error } = schema.validate(data);
+		const { error } = schema.validate(data, {
+			// checar todos los errores de golpe
+			abortEarly: false,
+		});
 		if (error) {
 			next(boom.badRequest(error));
 		}
