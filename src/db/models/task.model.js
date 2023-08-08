@@ -1,6 +1,6 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
 
-const TASK_TABLE = "tasls";
+const TASK_TABLE = "tasks";
 
 const TaskSchema = {
 	id: {
