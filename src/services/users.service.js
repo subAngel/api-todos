@@ -39,6 +39,9 @@ class UsersService {
 			rta,
 		};
 	}
+	async getTasksByUserId(id) {
+		const user = await this.findOne(id);
+	}
 }
 
 module.exports = UsersService;

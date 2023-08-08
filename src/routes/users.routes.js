@@ -88,4 +88,18 @@ router.delete(
 	}
 );
 
+router.get(
+	"/:id/tasks",
+	validatorHandler(getUserSchema, "params"),
+	async (req, res, next) => {
+		try {
+			const { id } = req.params;
+			const tasks = await service.getTasksByUserId(id);
+			res.json(tasks);
+		} catch (error) {
+			next(error);
+		}
+	}
+);
+
 module.exports = router;
