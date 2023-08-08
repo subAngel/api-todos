@@ -1,4 +1,5 @@
 const express = require("express");
+const debug = require("debug")("user-routes");
 const UsersService = require("../services/users.service");
 const validatorHandler = require("../middlewares/validator.handler");
 const {
@@ -6,7 +7,6 @@ const {
 	getUserSchema,
 	updateUserSchema,
 } = require("../schemas/user.schema");
-const { get } = require("http");
 
 const router = express.Router();
 const service = new UsersService();
@@ -54,16 +54,18 @@ router.post(
 router.patch(
 	"/:id",
 	validatorHandler(getUserSchema, "params"),
+	validatorHandler(updateUserSchema, "body"),
 	async (req, res, next) => {
 		try {
 			const { id } = req.params;
-			const body = req.body;
-			const userModified = await service.update(id, body);
+			const changes = req.body;
+			const userModified = await service.update(id, changes);
 			res.json({
 				message: "updated",
 				userModified,
 			});
 		} catch (error) {
+			console.log(error);
 			next(error);
 		}
 	}
