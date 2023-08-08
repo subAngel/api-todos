@@ -32,8 +32,8 @@ app.use(slash());
 // * Manejadores de errores
 // * middlewares de tipo error se definen antes del routing
 app.use(logErrors);
-app.use(boomErrorHandler);
 app.use(errorHandler);
+app.use(boomErrorHandler);
 
 // * Iniciar el servidor
 app.listen(process.env.PORT, () => {
