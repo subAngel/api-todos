@@ -10,6 +10,7 @@ const {
 	errorHandler,
 	logErrors,
 	boomErrorHandler,
+	ormErrorHandler,
 } = require("./middlewares/error.handler");
 
 const app = express();
@@ -32,8 +33,9 @@ app.use(slash());
 // * Manejadores de errores
 // * middlewares de tipo error se definen antes del routing
 app.use(logErrors);
-app.use(errorHandler);
+app.use(ormErrorHandler);
 app.use(boomErrorHandler);
+app.use(errorHandler);
 
 // * Iniciar el servidor
 app.listen(process.env.PORT, () => {
