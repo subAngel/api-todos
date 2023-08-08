@@ -18,11 +18,12 @@ const TaskSchema = {
 	description: {
 		type: DataTypes.STRING,
 	},
-	copmleted: {
+	completed: {
 		type: DataTypes.BOOLEAN,
 		allowNull: false,
 	},
-	due_date: {
+	dueDate: {
+		field: "due_date",
 		type: DataTypes.DATE,
 	},
 	createdAt: {
