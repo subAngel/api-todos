@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const debug = require("debug")("user-service");
 const getConnection = require("../libs/postgres");
 const { models } = require("../libs/sequelize");
+const { where } = require("sequelize");
 
 class UsersService {
 	constructor() {}
@@ -19,6 +20,16 @@ class UsersService {
 		}
 		delete user.dataValues.password;
 
+		return user;
+	}
+
+	async findByUsername(username) {
+		const user = await models.User.findOne({
+			where: { username },
+		});
+		if (!user) {
+			throw boom.notFound(`User ${username} not found`);
+		}
 		return user;
 	}
 
