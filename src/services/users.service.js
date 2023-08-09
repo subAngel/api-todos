@@ -1,4 +1,5 @@
 const boom = require("@hapi/boom");
+const bcrypt = require("bcrypt");
 const debug = require("debug")("user-service");
 const getConnection = require("../libs/postgres");
 const { models } = require("../libs/sequelize");
@@ -16,11 +17,20 @@ class UsersService {
 		if (!user) {
 			throw boom.notFound("User not found");
 		}
+		delete user.dataValues.password;
+
 		return user;
 	}
 
 	async create(data) {
-		const newUser = await models.User.create(data);
+		const hash = await bcrypt.hash(data.password, 10);
+		const newUser = await models.User.create({
+			...data,
+			password: hash,
+		});
+
+		delete newUser.dataValues.password;
+
 		return newUser;
 	}
 
