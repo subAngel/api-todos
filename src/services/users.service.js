@@ -42,11 +42,25 @@ class UsersService {
 	async getTasksByUserId(id) {
 		try {
 			const user = await this.findOne(id);
-			const tasks = await user.getTasks();
+			const tasks = await user.getTasks({
+				where: {
+					completed: false,
+				},
+			});
 			return tasks;
 		} catch (error) {
 			throw boom.badData("Could not get tasks.");
 		}
+	}
+	async getCompletedTasksByUser(id) {
+		const user = await this.findOne(id);
+		const tasks = await user.getTasks({
+			where: {
+				completed: true,
+			},
+		});
+		tasks;
+		return tasks;
 	}
 	async createTaskForUser(id, taskData) {
 		const user = await this.findOne(id);

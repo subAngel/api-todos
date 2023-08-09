@@ -107,6 +107,21 @@ router.get(
 	}
 );
 
+router.get(
+	"/:id/completed-tasks",
+	validatorHandler(getUserSchema, "params"),
+	async (req, res, next) => {
+		try {
+			const { id } = req.params;
+			const tasks = await service.getCompletedTasksByUser(id);
+
+			res.json(tasks);
+		} catch (error) {
+			next(error);
+		}
+	}
+);
+
 router.post(
 	"/:id/tasks",
 	validatorHandler(getUserSchema, "params"),
