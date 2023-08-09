@@ -40,7 +40,43 @@ class UsersService {
 		};
 	}
 	async getTasksByUserId(id) {
+		try {
+			const user = await this.findOne(id);
+			const tasks = await user.getTasks();
+			return tasks;
+		} catch (error) {
+			throw boom.badData("Could not get tasks.");
+		}
+	}
+	async createTaskForUser(id, taskData) {
 		const user = await this.findOne(id);
+		const task = {
+			...taskData,
+		};
+		const newTask = await user.createTask(task);
+		return newTask;
+	}
+
+	async deleteTask(id, idtask) {
+		const user = await this.findOne(id);
+		const task = await models.Task.findByPk(idtask);
+		if (!task) {
+			throw boom.notFound("Task not found");
+		}
+		const rta = await task.destroy();
+		return rta;
+		// return { user, task };
+	}
+
+	async completeTask(id, idtask) {
+		const user = await this.findOne(id);
+		const task = await models.Task.findByPk(idtask);
+		if (!task) {
+			throw boom.notFound("Task not found");
+		}
+
+		const taskCompleted = await task.update({ completed: true });
+		return taskCompleted;
 	}
 }
 

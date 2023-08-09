@@ -26,8 +26,14 @@ const getUserSchema = Joi.object({
 	id: id.required(),
 });
 
+const getUserWithTask = Joi.object({
+	id: id.required(),
+	idtask: Joi.number().required(),
+});
+
 module.exports = {
 	createUserSchema,
 	updateUserSchema,
 	getUserSchema,
+	getUserWithTask,
 };

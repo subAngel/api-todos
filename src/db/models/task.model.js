@@ -29,7 +29,7 @@ const TaskSchema = {
 	createdAt: {
 		type: DataTypes.DATE,
 		field: "created_at",
-		defaultValue: Sequelize.NOW,
+		defaultValue: Sequelize.NOW /*  */,
 	},
 	userId: {
 		field: "user_id",

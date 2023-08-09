@@ -10,7 +10,7 @@ const dueDate = Joi.date();
 
 const createTaskSchema = Joi.object({
 	// id: id.required(),
-	userId: userId.required(),
+	// userId: userId.required(),
 	title: title.required(),
 	description: description,
 	completed: completed.required(),

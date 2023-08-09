@@ -6,7 +6,10 @@ const {
 	createUserSchema,
 	getUserSchema,
 	updateUserSchema,
+	getUserWithTask,
 } = require("../schemas/user.schema");
+const { createTaskSchema, getTaskSchema } = require("../schemas/task.schema");
+const Joi = require("joi");
 
 const router = express.Router();
 const service = new UsersService();
@@ -88,6 +91,8 @@ router.delete(
 	}
 );
 
+// TASKS
+
 router.get(
 	"/:id/tasks",
 	validatorHandler(getUserSchema, "params"),
@@ -96,6 +101,59 @@ router.get(
 			const { id } = req.params;
 			const tasks = await service.getTasksByUserId(id);
 			res.json(tasks);
+		} catch (error) {
+			next(error);
+		}
+	}
+);
+
+router.post(
+	"/:id/tasks",
+	validatorHandler(getUserSchema, "params"),
+	validatorHandler(createTaskSchema, "body"),
+	async (req, res, next) => {
+		try {
+			const { id } = req.params;
+			const taskData = req.body;
+			const newTask = await service.createTaskForUser(id, taskData);
+			res.json({
+				message: "Task created succesfull",
+				task: newTask,
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+);
+
+router.delete(
+	"/:id/tasks/:idtask",
+	validatorHandler(getUserWithTask, "params"),
+	async (req, res, next) => {
+		try {
+			const { id, idtask } = req.params;
+			const rta = await service.deleteTask(id, idtask);
+			res.json({
+				message: `Task ${idtask} has been deleted`,
+				response: rta,
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+);
+
+router.put(
+	"/:id/tasks/:idtask",
+	validatorHandler(getUserWithTask, "params"),
+	async (req, res, next) => {
+		try {
+			const { id, idtask } = req.params;
+			const taskCompleted = await service.completeTask(id, idtask);
+			res.json({
+				message: "Task completed",
+				task: taskCompleted,
+			});
 		} catch (error) {
 			next(error);
 		}
