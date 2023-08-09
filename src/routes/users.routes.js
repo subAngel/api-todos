@@ -9,7 +9,7 @@ const {
 	getUserWithTask,
 } = require("../schemas/user.schema");
 const { createTaskSchema, getTaskSchema } = require("../schemas/task.schema");
-const Joi = require("joi");
+const { checkApiKey } = require("../middlewares/auth.handler");
 
 const router = express.Router();
 const service = new UsersService();
@@ -76,6 +76,7 @@ router.patch(
 
 router.delete(
 	"/:id",
+	checkApiKey, // TODO cambiar esto
 	validatorHandler(getUserSchema, "params"),
 	async (req, res, next) => {
 		try {
