@@ -19,6 +19,7 @@ const app = express();
 app.enable("scrict routing");
 app.use(morgan("dev"));
 app.use(cors());
+require("./utils/auth"); // Ejecutando las estrategias de passport
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
