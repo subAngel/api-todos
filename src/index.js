@@ -5,6 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const slash = require("express-slash");
 const helmet = require("helmet");
+const cookieParser = require("cookie-parser");
 const routerApi = require("./routes");
 const {
 	errorHandler,
@@ -18,6 +19,7 @@ const app = express();
 // * configuracion y middlewares
 app.enable("scrict routing");
 app.use(morgan("dev"));
+app.use(cookieParser());
 app.use(cors());
 require("./utils/auth"); // Ejecutando las estrategias de passport
 app.use(helmet());

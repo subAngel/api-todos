@@ -13,16 +13,10 @@ authRouter.post(
 			const payload = {
 				sub: user.id,
 				name: user.fullname,
-				// user: {
-				// 	id: user.id,
-				// 	fullname: user.fullname,
-				// 	username: user.username,
-				// 	profile: user.imageProfile,
-				// 	email: user.email,
-				// },
 			};
 
 			const token = jwt.sign(payload, config.secretKey);
+			res.cookie("token", token, { httpOnly: true });
 			res.json({ user, token });
 		} catch (error) {
 			next(error);
