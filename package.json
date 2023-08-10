@@ -13,6 +13,7 @@
 		"express-slash": "^2.0.1",
 		"helmet": "^7.0.0",
 		"joi": "^17.9.2",
+		"jsonwebtoken": "^9.0.1",
 		"morgan": "^1.10.0",
 		"passport": "^0.6.0",
 		"passport-local": "^1.0.0",
