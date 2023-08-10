@@ -11,4 +11,17 @@ function checkApiKey(req, res, next) {
 	}
 }
 
-module.exports = { checkApiKey };
+function checkUser(req, res, next) {
+	const user = req.user;
+	const { id } = req.params;
+
+	if (user.sub == id) {
+		// console.log("El usuario coincide");
+		next();
+	} else {
+		// console.log("no es valido pero bueno");
+		next(boom.unauthorized());
+	}
+}
+
+module.exports = { checkApiKey, checkUser };

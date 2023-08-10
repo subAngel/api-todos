@@ -12,11 +12,14 @@ authRouter.post(
 			const user = req.user;
 			const payload = {
 				sub: user.id,
-				user: {
-					id: user.id,
-					fullname: user.fullname,
-					username: user.username,
-				},
+				name: user.fullname,
+				// user: {
+				// 	id: user.id,
+				// 	fullname: user.fullname,
+				// 	username: user.username,
+				// 	profile: user.imageProfile,
+				// 	email: user.email,
+				// },
 			};
 
 			const token = jwt.sign(payload, config.secretKey);
