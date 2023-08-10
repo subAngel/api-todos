@@ -9,7 +9,11 @@ class UsersService {
 	constructor() {}
 
 	async findAll() {
-		const users = await models.User.findAll();
+		const users = await models.User.findAll({
+			where: {
+				deleted: false,
+			},
+		});
 		return users;
 	}
 
@@ -47,6 +51,7 @@ class UsersService {
 
 	async delete(id) {
 		const user = await this.findOne(id);
+		// await user.update({ deleted: true });
 		await user.destroy();
 		return { id };
 	}

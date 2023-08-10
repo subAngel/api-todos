@@ -6,6 +6,8 @@ const {
 	updateTaskScheme,
 	getTaskSchema,
 } = require("../schemas/task.schema");
+const JwtStrategy = require("../utils/auth/strategies/jwt.strategy");
+const passport = require("passport");
 
 const routesTasks = Router();
 const service = new TasksService();
@@ -35,6 +37,7 @@ routesTasks.get(
 
 routesTasks.post(
 	"/",
+	passport.authenticate("jwt", { session: false }),
 	validatorHandler(createTaskSchema, "body"),
 	async (req, res, next) => {
 		try {
