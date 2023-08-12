@@ -11,7 +11,7 @@ class AuthService {
 		}
 		const isMatch = await bcrypt.compare(password, user.password);
 		if (!isMatch) {
-			throw boom.unauthorized("User not found!");
+			throw boom.unauthorized("Credentials are invalid");
 		}
 		delete user.dataValues.password;
 		return user;

@@ -27,6 +27,7 @@ authRouter.post(
 authRouter.post("/recovery", async (req, res, next) => {
 	try {
 		const { email } = req.body;
+		res.json();
 	} catch (error) {
 		next(error);
 	}
