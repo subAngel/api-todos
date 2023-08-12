@@ -38,7 +38,7 @@ class AuthService {
 			host: "smtp.gmail.com",
 			port: 465,
 			auth: {
-				user: "whoangel.agl@gmail.com",
+				user: config.mailSender,
 				pass: config.mailPass,
 			},
 		});
