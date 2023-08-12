@@ -37,6 +37,16 @@ class UsersService {
 		return user;
 	}
 
+	async findByEmail(email) {
+		const user = await models.User.findOne({
+			where: { email },
+		});
+		if (!user) {
+			throw boom.notFound("User with that e-mail does not exist");
+		}
+		return user;
+	}
+
 	async create(data) {
 		const hash = await bcrypt.hash(data.password, 10);
 		const newUser = await models.User.create({
