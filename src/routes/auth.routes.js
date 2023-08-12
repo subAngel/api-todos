@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const { config } = require("../config/config");
 const AuthService = require("../services/auth.service");
 const authRouter = Router();
+const { recoveryPassword } = require("../schemas/user.schema");
+const validatorHander = require("../middlewares/validator.handler");
 
 const service = new AuthService();
 
@@ -31,5 +33,18 @@ authRouter.post("/recovery", async (req, res, next) => {
 		next(error);
 	}
 });
+
+authRouter.post(
+	"/change-password",
+	validatorHander(recoveryPassword, "body"),
+	async (req, res, next) => {
+		try {
+			const { token, password } = req.body;
+			const rta = await service.changePassword(token, password);
+		} catch (error) {
+			next(error);
+		}
+	}
+);
 
 module.exports = authRouter;

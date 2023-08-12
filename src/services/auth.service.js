@@ -6,6 +6,7 @@ const { config } = require("../config/config");
 const nodemailer = require("nodemailer");
 const fs = require("fs");
 const path = require("path");
+const passport = require("passport");
 
 const service = new UsersService();
 class AuthService {
@@ -60,6 +61,26 @@ class AuthService {
 		};
 		const rta = await this.sendMail(mail);
 		return rta;
+	}
+
+	async changePassword(token, newPassword) {
+		try {
+			const payload = jwt.verify(token, config.secretKey);
+			const user = await service.findOne(payload.sub);
+			if (user.recoveryToken !== token) {
+				throw boom.unauthorized();
+			}
+			const hash = await bcrypt.hash(newPassword, 10);
+			await user.update(user.id, {
+				recoveryToken: null,
+				password: hash,
+			});
+			return {
+				message: "Password changed",
+			};
+		} catch (error) {
+			throw boom.unauthorized();
+		}
 	}
 
 	async sendMail(infomail) {

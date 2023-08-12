@@ -31,9 +31,15 @@ const getUserWithTask = Joi.object({
 	idtask: Joi.number().required(),
 });
 
+const recoveryPassword = Joi.object({
+	password: Joi.string().min(6).required(),
+	token: Joi.string().token().required(),
+});
+
 module.exports = {
 	createUserSchema,
 	updateUserSchema,
 	getUserSchema,
 	getUserWithTask,
+	recoveryPassword,
 };
