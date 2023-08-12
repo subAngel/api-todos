@@ -10,6 +10,7 @@ const config = {
 	apiKey: process.env.API_KEY,
 	secretKey: process.env.SECRET,
 	mailPass: process.env.GMAIL_PASS,
+	mailSender: process.env.GMAIL_EMAIL,
 };
 
 module.exports = { config };
