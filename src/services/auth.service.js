@@ -20,6 +20,7 @@ class AuthService {
 			throw boom.unauthorized("Credentials are invalid");
 		}
 		delete user.dataValues.password;
+		delete user.dataValues.recoveryToken;
 		return user;
 	}
 	signToken(user) {
