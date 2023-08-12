@@ -38,17 +38,17 @@ class AuthService {
 			host: "smtp.gmail.com",
 			port: 465,
 			auth: {
-				user: config.mailSender,
+				user: "whoangel.agl@gmail.com",
 				pass: config.mailPass,
 			},
 		});
 
 		await transporter.sendMail({
-			from: `"${user.fullname} < ${user.email} >"`,
+			from: `"TODOS APP from "`,
 			to: `${user.email}`,
 			subject: "Password Recovery",
-			text: "hello world",
-			html: "<h1>Hello world</h1>",
+			text: "Recuperación de contraseña",
+			html: "<button>button</button>",
 		});
 
 		return {
