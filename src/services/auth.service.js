@@ -31,11 +31,15 @@ class AuthService {
 		return { user, token };
 	}
 
-	async sendMail(email) {
+	async sendRecovery(email) {
 		const user = await service.findByEmail(email);
-		if (!user) {
-			throw boom.unauthorized("The email doesn't exists");
-		}
+
+		const payload = {
+			sub: user.id,
+			fullname: user.fullname,
+			username: user.username,
+		};
+		const token = jwt.sign(payload, config.secretKey, { expiresIn: "10min" });
 
 		const templateFilePath = path.join(
 			__dirname,
@@ -43,6 +47,23 @@ class AuthService {
 			"email.template.html"
 		);
 		let htmlContent = fs.readFileSync(templateFilePath, "utf-8");
+		const emailContent = htmlContent.replace("{{TOKEN}}", token); // TODO
+		const mail = {
+			from: `"TODOS APP"`,
+			to: `${user.email}`,
+			subject: "Password Recovery",
+			text: "Recuperación de contraseña",
+			html: htmlContent,
+		};
+		const rta = await this.sendMail(mail);
+		return rta;
+	}
+
+	async sendMail(infomail) {
+		const user = await service.findByEmail(email);
+		if (!user) {
+			throw boom.unauthorized("The email doesn't exists");
+		}
 
 		const transporter = nodemailer.createTransport({
 			host: "smtp.gmail.com",
@@ -53,14 +74,7 @@ class AuthService {
 			},
 		});
 
-		await transporter.sendMail({
-			from: `"TODOS APP from "`,
-			to: `${user.email}`,
-			subject: "Password Recovery",
-			text: "Recuperación de contraseña",
-			html: htmlContent,
-		});
-		console.log("Template file path", templateFilePath);
+		await transporter.sendMail(infomail);
 		return {
 			message: "mail sent",
 		};
