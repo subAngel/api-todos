@@ -71,7 +71,7 @@ class AuthService {
 				throw boom.unauthorized();
 			}
 			const hash = await bcrypt.hash(newPassword, 10);
-			await user.update(user.id, {
+			await service.update(user.id, {
 				recoveryToken: null,
 				password: hash,
 			});

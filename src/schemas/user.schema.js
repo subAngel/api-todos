@@ -33,7 +33,7 @@ const getUserWithTask = Joi.object({
 
 const recoveryPassword = Joi.object({
 	password: Joi.string().min(6).required(),
-	token: Joi.string().token().required(),
+	token: Joi.string().required(),
 });
 
 module.exports = {

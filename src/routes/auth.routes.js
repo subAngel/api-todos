@@ -41,6 +41,7 @@ authRouter.post(
 		try {
 			const { token, password } = req.body;
 			const rta = await service.changePassword(token, password);
+			res.json(rta);
 		} catch (error) {
 			next(error);
 		}
