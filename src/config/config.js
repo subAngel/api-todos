@@ -9,6 +9,7 @@ const config = {
 	dbPort: process.env.DB_PORT,
 	apiKey: process.env.API_KEY,
 	secretKey: process.env.SECRET,
+	mailPass: process.env.GMAIL_PASS,
 };
 
 module.exports = { config };

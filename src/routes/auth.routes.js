@@ -24,4 +24,12 @@ authRouter.post(
 	}
 );
 
+authRouter.post("/recovery", async (req, res, next) => {
+	try {
+		const { email } = req.body;
+	} catch (error) {
+		next(error);
+	}
+});
+
 module.exports = authRouter;
