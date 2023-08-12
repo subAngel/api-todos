@@ -11,6 +11,7 @@ const config = {
 	secretKey: process.env.SECRET,
 	mailPass: process.env.GMAIL_PASS,
 	mailSender: process.env.GMAIL_EMAIL,
+	dbURL: process.env.DB_URL,
 };
 
 module.exports = { config };

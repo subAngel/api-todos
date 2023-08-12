@@ -1,6 +1,7 @@
 const { Sequelize } = require("sequelize");
 const { config } = require("../config/config");
 const setupModels = require("../db/models");
+const { uriTooLong } = require("@hapi/boom");
 const debug = require("debug")("sequelize");
 
 const USER = encodeURIComponent(config.dbUser);
