@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { config } = require("../config/config");
 const nodemailer = require("nodemailer");
+const fs = require("fs");
+const path = require("path");
 
 const service = new UsersService();
 class AuthService {
@@ -34,6 +36,14 @@ class AuthService {
 		if (!user) {
 			throw boom.unauthorized("The email doesn't exists");
 		}
+
+		const templateFilePath = path.join(
+			__dirname,
+			"../views",
+			"email.template.html"
+		);
+		let htmlContent = fs.readFileSync(templateFilePath, "utf-8");
+
 		const transporter = nodemailer.createTransport({
 			host: "smtp.gmail.com",
 			port: 465,
@@ -48,9 +58,9 @@ class AuthService {
 			to: `${user.email}`,
 			subject: "Password Recovery",
 			text: "Recuperación de contraseña",
-			html: "<button>button</button>",
+			html: htmlContent,
 		});
-
+		console.log("Template file path", templateFilePath);
 		return {
 			message: "mail sent",
 		};

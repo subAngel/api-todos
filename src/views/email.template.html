@@ -1,23 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.1/dist/full.css"
-            rel="stylesheet" type="text/css" />
-        <script src="https://cdn.tailwindcss.com"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Koulen&family=Lato&family=Nunito&family=Playfair+Display:ital@1&family=Prata&family=Raleway:ital,wght@1,100&family=Roboto&family=Roboto+Condensed&family=Teko&display=swap');
+*{
+font-family: Roboto, sans-serif;
+
+}
+
+.container{
+    max-width: 200px;
+}
+
+
+.btn{
+font-weight: 700;
+font-size: 14px;
+color: #fff;
+background-color: #0066CC;
+padding: 10px 30px;
+border: 2px solid #0066cc;
+box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+border-radius: 49px;
+transition : 1000ms;
+transform: translateY(0);
+display: flex;
+flex-direction: row;
+align-items: center;
+cursor: pointer;
+text-transform: uppercase;
+/* width: 120px; */
+}
+
+.btn:hover{
+
+transition : ease 1000ms;
+/* padding: 10px 50px; */
+/* transform : translateY(-0px); */
+background-color: #fff;
+color: #0066cc;
+border: solid 2px #0066cc;
+}
+
+</style>
     </head>
     <body>
-        <<div class="hero min-h-screen bg-base-200">
-            <div class="hero-content text-center">
-                <div class="max-w-md">
-                    <h1 class="text-5xl font-bold">Recovery Password</h1>
-                    <p class="py-6">Lorem ipsum dolor sit, amet consectetur
-                        adipisicing elit. Totam itaque dolorum nihil nam?
-                        Dignissimos dolore quasi sunt minus quidem tempore,
-                        quae, dolores tempora non iusto voluptate? Officiis
-                        sapiente repellat tempora.</p>
-                    <button class="btn btn-primary">Get Started</button>
+        <body>
+            <section class="hero">
+                <div class="content">
+                    <h2>Password Recovery</h2>
+                    <p>Aliquam erat ac ipsum. Integer aliquam purus. Quisque
+                        lorem
+                        tortor fringilla sed, vestibulum id, eleifend justo vel
+                        bibendum sapien massa ac turpis faucibus orci luctus non</p>
+                    <div class="container">
+
+                        <a class="btn">Change Password</a>
+
+                    </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </body>
     </body>
 </html>
