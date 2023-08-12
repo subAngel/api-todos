@@ -33,7 +33,9 @@ class AuthService {
 
 	async sendRecovery(email) {
 		const user = await service.findByEmail(email);
-
+		if (!user) {
+			throw boom.unauthorized();
+		}
 		const payload = {
 			sub: user.id,
 			fullname: user.fullname,
@@ -46,25 +48,21 @@ class AuthService {
 			"../views",
 			"email.template.html"
 		);
-		let htmlContent = fs.readFileSync(templateFilePath, "utf-8");
-		const emailContent = htmlContent.replace("{{TOKEN}}", token); // TODO
+		const htmlContent = fs.readFileSync(templateFilePath, "utf-8");
+		const emailContent = htmlContent.replace("{{TOKEN}}", token);
+		await service.update(user.id, { recoveryToken: token });
 		const mail = {
-			from: `"TODOS APP"`,
-			to: `${user.email}`,
+			from: config.mailSender,
+			to: user.email,
 			subject: "Password Recovery",
 			text: "Recuperación de contraseña",
-			html: htmlContent,
+			html: emailContent,
 		};
 		const rta = await this.sendMail(mail);
 		return rta;
 	}
 
 	async sendMail(infomail) {
-		const user = await service.findByEmail(email);
-		if (!user) {
-			throw boom.unauthorized("The email doesn't exists");
-		}
-
 		const transporter = nodemailer.createTransport({
 			host: "smtp.gmail.com",
 			port: 465,
