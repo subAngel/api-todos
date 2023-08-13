@@ -23,6 +23,7 @@ class UsersService {
 			throw boom.notFound("User not found");
 		}
 		delete user.dataValues.password;
+		delete user.dataValues.recoveryToken;
 
 		return user;
 	}
