@@ -8,11 +8,12 @@ const {
 } = require("../schemas/task.schema");
 const JwtStrategy = require("../utils/auth/strategies/jwt.strategy");
 const passport = require("passport");
+const { checkApiKey } = require("../middlewares/auth.handler");
 
 const routesTasks = Router();
 const service = new TasksService();
 
-routesTasks.get("/", async (req, res, next) => {
+routesTasks.get("/", checkApiKey, async (req, res, next) => {
 	try {
 		const tasks = await service.findAll();
 		return res.json(tasks);
