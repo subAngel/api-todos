@@ -15,7 +15,7 @@ const passport = require("passport");
 const router = express.Router();
 const service = new UsersService();
 
-router.get("/", async (req, res, next) => {
+router.get("/", checkApiKey, async (req, res, next) => {
 	try {
 		const users = await service.findAll();
 		res.json(users);
@@ -26,6 +26,7 @@ router.get("/", async (req, res, next) => {
 
 router.get(
 	"/:id",
+	checkApiKey,
 	validatorHandler(getUserSchema, "params"),
 	async (req, res, next) => {
 		try {
@@ -39,7 +40,7 @@ router.get(
 );
 
 router.post(
-	"/",
+	"/register",
 	validatorHandler(createUserSchema, "body"),
 	async (req, res, next) => {
 		try {
