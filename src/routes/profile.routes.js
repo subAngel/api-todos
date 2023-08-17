@@ -10,6 +10,22 @@ const router = Router();
 const service = new UsersService();
 
 router.get(
+	"/",
+	passport.authenticate("jwt", { session: false }),
+	async (req, res, next) => {
+		try {
+			const user = req.user;
+			const id = user.sub;
+			const info = await service.findOne(id);
+			delete info.password;
+			res.json(info);
+		} catch (error) {
+			next(error);
+		}
+	}
+);
+
+router.get(
 	"/my-tasks",
 	passport.authenticate("jwt", { session: false }),
 	async (req, res, next) => {
