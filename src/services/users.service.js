@@ -28,6 +28,13 @@ class UsersService {
 		return user;
 	}
 
+	async findOneTask(id) {
+		const task = await models.Task.findByPk(id);
+		if (!task) {
+			throw boom.notFound("Task not found");
+		}
+		return task;
+	}
 	async findByUsername(username) {
 		const user = await models.User.findOne({
 			where: { username },
@@ -110,10 +117,7 @@ class UsersService {
 
 	async deleteTask(id, idtask) {
 		const user = await this.findOne(id);
-		const task = await models.Task.findByPk(idtask);
-		if (!task) {
-			throw boom.notFound("Task not found");
-		}
+		const task = await this.findOneTask(idtask);
 		const rta = await task.destroy();
 		return rta;
 		// return { user, task };
@@ -121,13 +125,16 @@ class UsersService {
 
 	async completeTask(id, idtask) {
 		const user = await this.findOne(id);
-		const task = await models.Task.findByPk(idtask);
-		if (!task) {
-			throw boom.notFound("Task not found");
-		}
+		const task = await this.findOneTask(idtask);
 
 		const taskCompleted = await task.update({ completed: true });
 		return taskCompleted;
+	}
+	async updateTask(id, idTask, taskData) {
+		const user = await this.findOne(id);
+		const task = await this.findOneTask(idTask);
+		const newTask = await task.update(taskData);
+		return newTask;
 	}
 }
 

@@ -117,4 +117,25 @@ router.put(
 	}
 );
 
+router.patch(
+	"/my-tasks/:id",
+	passport.authenticate("jwt", { session: false }),
+	validatorHandler(getTaskSchema, "params"),
+	async (req, res, next) => {
+		try {
+			const user = req.user;
+			const idUser = user.sub;
+			const { id } = req.params;
+			const taskBody = req.body;
+			const task = await service.updateTask(idUser, id, taskBody);
+			res.json({
+				message: "Task updated",
+				task,
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+);
+
 module.exports = router;
